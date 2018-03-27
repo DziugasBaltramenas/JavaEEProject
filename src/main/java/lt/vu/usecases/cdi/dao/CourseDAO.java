@@ -19,4 +19,12 @@ public class CourseDAO {
     public List<Course> getAllCourses() {
         return em.createNamedQuery("Course.findAll", Course.class).getResultList();
     }
+
+    public Course findByName(String name) {
+        return em.createNamedQuery("Course.findByName", Course.class).setParameter("name", name).getSingleResult();
+    }
+
+    public Course findById(Integer id) {
+        return em.createNamedQuery("Course.findById", Course.class).setParameter("id", id).getSingleResult();
+    }
 }

@@ -45,4 +45,7 @@ public class Course implements Serializable {
 
     @ManyToMany(mappedBy = "courseList")
     private List<Student> studentList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "course")
+    private List<Grade> gradeList = new ArrayList<>();
 }

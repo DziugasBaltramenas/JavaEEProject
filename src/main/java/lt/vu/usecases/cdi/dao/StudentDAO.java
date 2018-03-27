@@ -27,4 +27,7 @@ public class StudentDAO {
     public Student findById(Integer id) {
         return em.find(Student.class, id);
     }
+    public Student findByLastName(String lastName) {
+        return em.createNamedQuery("Student.findByLastName", Student.class).setParameter("lastName", lastName).getSingleResult();
+    }
 }

@@ -61,6 +61,12 @@ public class Student implements Serializable {
     @JohnzonIgnore
     private List<Course> courseList = new ArrayList<>();
 
+    @OneToMany(mappedBy = "student")
+    private List<Grade> gradeList = new ArrayList<>();
+
+
+
+
     @JoinColumn(name = "UNIVERSITY_ID", referencedColumnName = "ID")
     @ManyToOne
     @JohnzonIgnore

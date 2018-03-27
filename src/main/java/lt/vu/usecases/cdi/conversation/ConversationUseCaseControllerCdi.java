@@ -1,10 +1,13 @@
 package lt.vu.usecases.cdi.conversation;
 
 import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import lt.vu.entities.Course;
+import lt.vu.entities.Grade;
 import lt.vu.entities.Student;
 import lt.vu.usecases.cdi.dao.CourseDAO;
+import lt.vu.usecases.cdi.dao.GradeDAO;
 import lt.vu.usecases.cdi.dao.StudentDAO;
 import org.omnifaces.util.Faces;
 import org.omnifaces.util.Messages;
@@ -26,11 +29,15 @@ import java.util.List;
 @Slf4j
 public class ConversationUseCaseControllerCdi implements Serializable {
 
-    private static final String PAGE_INDE_REDIRECT = "conversation-cdi?faces-redirect=true";
+    private static final String PAGE_INDEX_REDIRECT = "index?faces-redirect=true";
 
     private enum CURRENT_FORM {
-        CREATE_COURSE, CREATE_STUDENT, CONFIRMATION
+        CREATE_COURSE, CREATE_STUDENT, CONFIRMATION, GET_COURSE, GET_STUDENT
     }
+
+    @Setter
+    @Getter
+    private String studentID;
 
     @Inject
     private EntityManager em;
@@ -43,15 +50,20 @@ public class ConversationUseCaseControllerCdi implements Serializable {
     private CourseDAO courseDAO;
     @Inject
     private StudentDAO studentDAO;
+    @Inject
+    private GradeDAO gradeDAO;
 
     @Getter
     private Course course = new Course();
     @Getter
     private Student student = new Student();
     @Getter
+    private Grade grade = new Grade();
+
+    @Getter
     private List<Student> allStudents;
 
-    private CURRENT_FORM currentForm = CURRENT_FORM.CREATE_COURSE;
+    private CURRENT_FORM currentForm = CURRENT_FORM.GET_COURSE;
     public boolean isCurrentForm(CURRENT_FORM form) {
         return currentForm == form;
     }
@@ -99,7 +111,7 @@ public class ConversationUseCaseControllerCdi implements Serializable {
         }
         Faces.getFlash().setKeepMessages(true);
         conversation.end();
-        return PAGE_INDE_REDIRECT;
+        return PAGE_INDEX_REDIRECT;
     }
 
     /**
@@ -107,10 +119,32 @@ public class ConversationUseCaseControllerCdi implements Serializable {
      */
     public String cancel() {
         conversation.end();
-        return PAGE_INDE_REDIRECT;
+        return PAGE_INDEX_REDIRECT;
     }
 
     private void loadAllStudents() {
         allStudents = studentDAO.getAllStudents();
     }
+
+    public void findStudent(int id){
+        student = studentDAO.findById(id);
+    }
+
+
+    public void findCourse(int id){
+        conversation.begin();
+        course = courseDAO.findById(id);
+        currentForm = CURRENT_FORM.GET_COURSE;
+    }
+
+    @Transactional(Transactional.TxType.REQUIRED)
+    public void createGrade(){
+        grade.setCourse(course);
+        grade.setStudent(student);
+        gradeDAO.create(grade);
+        em.flush();
+
+        conversation.end();
+    }
+
 }

@@ -23,10 +23,13 @@ public class RequestUseCaseControllerJPA {
     private Student student = new Student();
     @Getter
     private List<Student> allStudents;
+    @Getter
+    private List<Course> allCourses;
 
     @PostConstruct
     public void init() {
         loadAllStudents();
+        loadAllCourses();
     }
 
     @Inject
@@ -46,4 +49,9 @@ public class RequestUseCaseControllerJPA {
     private void loadAllStudents() {
         allStudents = studentDAO.getAllStudents();
     }
+
+    private void loadAllCourses() {
+        allCourses = courseDAO.getAllCourses();
+    }
 }
+
