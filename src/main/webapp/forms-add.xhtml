@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:o="http://omnifaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+>
+<h:head>
+    <h:outputStylesheet name="css/styles.css" />
+    <title>Conversation implementation with CDI</title>
+</h:head>
+
+<h:body>
+    <h2>Conversation implementation with CDI</h2>
+    <b:panelGrid columns="1" colMd="4" offsetMd="4">
+        <b:form>
+            <b:inputText id="name" value="#{userBean.name}" label="Enter your name" required="true"  />
+            <b:message for="@previous" />
+
+            <b:inputText id="age" value="#{userBean.age}" label="What's your age?"  />
+            <b:message for="@previous" />
+
+            <b:commandButton update="@form" value="Validate constraints" />
+        </b:form>
+    </b:panelGrid>
+</h:body>
+</html>
+

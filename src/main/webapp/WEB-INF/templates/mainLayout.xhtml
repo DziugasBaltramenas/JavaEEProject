@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui"
+        >
+<!--@elvariable id="pageName" type="java.lang.String"-->
+<f:view locale="lt">
+    <h:head>
+        <meta charset="UTF-8"/>
+        <title>#{pageName}</title>
+    </h:head>
+
+    <h:body>
+        <h:panelGroup id="page" layout="block">
+            <h:panelGroup id="container" layout="block">
+                <header>
+                    <b:navBar brand="Brand" brandHref="#" id="dropMenuExample">
+                        <ui:include src="menu.xhtml"/>
+                    </b:navBar>
+                    <p:panel header="Header">
+                        <h:outputText value="Authenticated user: #{authenticatedUser.userName} / #{authenticatedUser.firstName} #{authenticatedUser.lastName} / roles: #{authenticatedUser.groups}"
+                                      rendered="#{user.authenticated}"/>
+                        <h:outputText value="Not authenticated"
+                                      rendered="#{!user.authenticated}"/>
+                        <br/>
+                        <h:link value="Login" outcome="/login.xhtml" rendered="#{!user.authenticated}"/>
+                        <h:link value="Logout" outcome="/logout.xhtml" rendered="#{user.authenticated}"/>
+                    </p:panel>
+                </header>
+
+
+
+
+                                <h1>#{pageName}</h1>
+
+                                <ui:insert name="form-to-add" />
+
+                <ui:insert name="conversa" />
+
+
+                <footer id="footer" style="margin-top: 1em">
+                    <p:panel header="Footer: Testavimui:"
+                             rendered="#{facesContext.application.projectStage == 'Development'}">
+                        <h:outputText value="Sesija: #{session.id}" />
+                    </p:panel>
+                </footer>
+            </h:panelGroup>
+        </h:panelGroup>
+
+        <f:facet name="last">
+            <h:outputStylesheet name="css/styles.css" />
+        </f:facet>
+
+    </h:body>
+</f:view>
+</html>
