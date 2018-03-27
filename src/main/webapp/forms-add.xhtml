@@ -8,7 +8,7 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 >
 <h:head>
-    <h:outputStylesheet name="css/styles.css" />
+    <h:outputStylesheet name="css/styles.css"/>
     <title>Conversation implementation with CDI</title>
 </h:head>
 
@@ -16,15 +16,44 @@
     <h2>Conversation implementation with CDI</h2>
     <b:panelGrid columns="1" colMd="4" offsetMd="4">
         <b:form>
-            <b:inputText id="name" value="#{userBean.name}" label="Enter your name" required="true"  />
-            <b:message for="@previous" />
+            <p:outputPanel rendered="#{conversationUseCaseControllerCdi.isCurrentForm('CREATE_COURSE')}">
+                <h1>Create new course</h1>
 
-            <b:inputText id="age" value="#{userBean.age}" label="What's your age?"  />
-            <b:message for="@previous" />
+                <b:inputText id="courseName" value="#{conversationUseCaseControllerCdi.course.name}"
+                             label="Course name " required="true"/>
+                <b:commandButton update="@form" value="Create course"
+                                 actionListener="#{conversationUseCaseControllerCdi.createCourse}"/>
 
-            <b:commandButton update="@form" value="Validate constraints" />
+            </p:outputPanel>
+
+            <p:outputPanel rendered="#{conversationUseCaseControllerCdi.isCurrentForm('CREATE_STUDENT')}">
+                <h1>Create new student</h1>
+
+                <b:inputText id="firstName" value="#{conversationUseCaseControllerCdi.student.firstName}"
+                             label="First Name " required="true"/>
+                <b:inputText id="lastName" value="#{conversationUseCaseControllerCdi.student.lastName}"
+                             label="Last Name " required="true"/>
+                <b:inputText id="regnr" value="#{conversationUseCaseControllerCdi.student.registrationNo}"
+                             label="Registration No. " required="true"/>
+
+                <b:commandButton value="Create student"
+                                 actionListener="#{conversationUseCaseControllerCdi.createStudent}"
+                                 update="@form"/>
+
+            </p:outputPanel>
+
+
+            <p:outputPanel rendered="#{conversationUseCaseControllerCdi.isCurrentForm('CONFIRMATION')}">
+                <h1>Confirmation: are you sure?</h1>
+                <!-- This is the last step - turn-off AJAX, use HTTP-POST based navigation: -->
+                <b:commandButton value="OK" action="#{conversationUseCaseControllerCdi.ok}" ajax="true"/>
+                <b:commandButton value="Cancel" action="#{conversationUseCaseControllerCdi.cancel}" ajax="false"/>
+            </p:outputPanel>
         </b:form>
+
     </b:panelGrid>
+
+
 </h:body>
 </html>
 

@@ -26,7 +26,7 @@ import java.util.List;
 @Slf4j
 public class ConversationUseCaseControllerCdi implements Serializable {
 
-    private static final String PAGE_INDEX_REDIRECT = "conversation-cdi?faces-redirect=true";
+    private static final String PAGE_INDE_REDIRECT = "conversation-cdi?faces-redirect=true";
 
     private enum CURRENT_FORM {
         CREATE_COURSE, CREATE_STUDENT, CONFIRMATION
@@ -99,7 +99,7 @@ public class ConversationUseCaseControllerCdi implements Serializable {
         }
         Faces.getFlash().setKeepMessages(true);
         conversation.end();
-        return PAGE_INDEX_REDIRECT;
+        return PAGE_INDE_REDIRECT;
     }
 
     /**
@@ -107,7 +107,7 @@ public class ConversationUseCaseControllerCdi implements Serializable {
      */
     public String cancel() {
         conversation.end();
-        return PAGE_INDEX_REDIRECT;
+        return PAGE_INDE_REDIRECT;
     }
 
     private void loadAllStudents() {
