@@ -14,111 +14,58 @@
 </h:head>
 
 <h:body>
-
-
-
-
-
-    <h2>Conversation implementation with CDI</h2>
     <b:panelGrid columns="1" colMd="8" offsetMd="2">
-    <h:form>
-        <b:dataTable value="#{conversationUseCaseControllerCdi.allStudents}" var="student">
-            <b:dataTableColumn label="Student">
-                <h:outputText value="#{student.firstName} #{student.lastName} #{student.registrationNo}" />
-            </b:dataTableColumn>
-            <b:dataTableColumn label="Courses">
-                <ui:repeat var="course" value="#{student.courseList}">
-                    <h:outputText value="#{course.name} " />
-                </ui:repeat>
-            </b:dataTableColumn>
-            <b:dataTableColumn label="University">
-                <h:outputText value="#{student.university.title} " />
-            </b:dataTableColumn>
-            <b:dataTableColumn label="Grades">
-                <ui:repeat var="grade" value="#{student.gradeList}">
-                    <h:outputText value="#{grade.grade} " />
-                </ui:repeat>
-            </b:dataTableColumn>
-        </b:dataTable>
+        <h:form>
+            <b:dataTable value="#{conversationUseCaseControllerCdi.allStudents}" var="student">
+                <b:dataTableColumn label="Student">
+                    <h:outputText value="#{student.firstName} #{student.lastName} #{student.registrationNo}"/>
+                </b:dataTableColumn>
+                <b:dataTableColumn label="Courses">
+                    <ui:repeat var="course" value="#{student.courseList}">
+                        <h:outputText value="#{course.name} "/>
+                    </ui:repeat>
+                </b:dataTableColumn>
+                <b:dataTableColumn label="University">
+                    <h:outputText value="#{student.university.title} "/>
+                </b:dataTableColumn>
+                <b:dataTableColumn label="Grades">
+                    <ui:repeat var="grade" value="#{student.gradeList}">
+                        <h:outputText value="#{grade.grade} "/>
+                    </ui:repeat>
+                </b:dataTableColumn>
+            </b:dataTable>
 
-    </h:form>
+        </h:form>
     </b:panelGrid>
-
-    <b:panelGrid columns="1" colMd="4" offsetMd="4">
-        <b:form>
-
-
-
-
-
-
-            <p:outputPanel rendered="#{conversationUseCaseControllerCdi.isCurrentForm('CREATE_COURSE')}">
-                <h1>Create new course</h1>
-
-                <b:inputText id="courseName" value="#{conversationUseCaseControllerCdi.course.name}"
-                             label="Course name " required="true"/>
-                <b:commandButton update="@form" value="Create course"
-                                 actionListener="#{conversationUseCaseControllerCdi.createCourse}"/>
-
-            </p:outputPanel>
-
-            <p:outputPanel rendered="#{conversationUseCaseControllerCdi.isCurrentForm('CREATE_STUDENT')}">
-                <h1>Create new student</h1>
-
-                <b:inputText id="firstName" value="#{conversationUseCaseControllerCdi.student.firstName}"
-                             label="First Name " required="true"/>
-                <b:inputText id="lastName" value="#{conversationUseCaseControllerCdi.student.lastName}"
-                             label="Last Name " required="true"/>
-                <b:inputText id="regnr" value="#{conversationUseCaseControllerCdi.student.registrationNo}"
-                             label="Registration No. " required="true"/>
-
-                <b:commandButton value="Create student"
-                                 actionListener="#{conversationUseCaseControllerCdi.createStudent}"
-                                 update="@form"/>
-
-            </p:outputPanel>
-
-
-            <p:outputPanel rendered="#{conversationUseCaseControllerCdi.isCurrentForm('CONFIRMATION')}">
-                <h1>Confirmation: are you sure?</h1>
-                <!-- This is the last step - turn-off AJAX, use HTTP-POST based navigation: -->
-                <b:commandButton value="OK" action="#{conversationUseCaseControllerCdi.ok}" ajax="true"/>
-                <b:commandButton value="Cancel" action="#{conversationUseCaseControllerCdi.cancel}" ajax="false"/>
-            </p:outputPanel>
-        </b:form>
-
-    </b:panelGrid>
-
-
 
     <b:panelGrid columns="1" colMd="4" offsetMd="4">
         <b:form var="lastName">
-                <h1>Create new course</h1>
-
-
-                <p>What's your favorite band?</p>
+            <p:outputPanel rendered="#{conversationUseCaseControllerCdi.isCurrentForm('GET_COURSE')}">
+                <h1>Select course</h1>
                 <b:radiobutton value="#{courseBeans.course}">
-                    <f:selectItems value="#{courseBeans.courses}" />
-                    <f:selectItem itemValue="" itemLabel="None of the above" />
+                    <f:selectItems value="#{courseBeans.courses}"/>
                 </b:radiobutton>
                 <b:commandButton update="@form" value="Find"
                                  actionListener="#{conversationUseCaseControllerCdi.findCourse(courseBeans.course)}"/>
 
+            </p:outputPanel>
+            <p:outputPanel rendered="#{conversationUseCaseControllerCdi.isCurrentForm('GET_STUDENT')}">
+                <h1>Select Student</h1>
+                <b:radiobutton value="#{studentBeans.id}">
+                    <f:selectItems value="#{studentBeans.students}"/>
+                </b:radiobutton>
+                <b:commandButton update="@form" value="Find"
+                                 actionListener="#{conversationUseCaseControllerCdi.findStudent(studentBeans.id)}"/>
 
-                <b:inputText id="lastName" value="#{lastName}"
-                             label="Last name " required="true"/>
-                <b:commandButton update="@form" value="Find student"
-                                 actionListener="#{conversationUseCaseControllerCdi.findStudent(lastName)}"/>
-                <b:inputText id="courseName" value="#{courseName}"
-                             label="Course name " required="true"/>
-                <b:commandButton update="@form" value="Create course"
-                                 actionListener="#{conversationUseCaseControllerCdi.findCourse(courseName)}"/>
-
-                <b:inputText id="grade" value="#{conversationUseCaseControllerCdi.grade.grade}" label="Grade" required="true"/>
+            </p:outputPanel>
+            <p:outputPanel rendered="#{conversationUseCaseControllerCdi.isCurrentForm('CREATE_GRADE')}">
+                <b:inputText id="grade" value="#{conversationUseCaseControllerCdi.grade.grade}" label="Grade"
+                             required="true"/>
                 <b:commandButton update="@form" value="Add grade"
-                                 actionListener="#{conversationUseCaseControllerCdi.createGrade}"/>
+                                 action="#{conversationUseCaseControllerCdi.createGrade}"
+                                 />
+            </p:outputPanel>
         </b:form>
-
     </b:panelGrid>
 
 

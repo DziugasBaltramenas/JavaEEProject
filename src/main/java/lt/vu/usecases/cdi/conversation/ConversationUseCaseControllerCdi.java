@@ -15,6 +15,7 @@ import org.omnifaces.util.Messages;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
@@ -32,7 +33,7 @@ public class ConversationUseCaseControllerCdi implements Serializable {
     private static final String PAGE_INDEX_REDIRECT = "index?faces-redirect=true";
 
     private enum CURRENT_FORM {
-        CREATE_COURSE, CREATE_STUDENT, CONFIRMATION, GET_COURSE, GET_STUDENT
+        CREATE_COURSE, CREATE_STUDENT, CONFIRMATION, GET_COURSE, GET_STUDENT,  CREATE_GRADE
     }
 
     @Setter
@@ -128,23 +129,27 @@ public class ConversationUseCaseControllerCdi implements Serializable {
 
     public void findStudent(int id){
         student = studentDAO.findById(id);
+        currentForm = CURRENT_FORM.CREATE_GRADE;
+
     }
 
 
     public void findCourse(int id){
         conversation.begin();
         course = courseDAO.findById(id);
-        currentForm = CURRENT_FORM.GET_COURSE;
+        currentForm = CURRENT_FORM.GET_STUDENT;
     }
 
     @Transactional(Transactional.TxType.REQUIRED)
-    public void createGrade(){
+    public String createGrade(){
         grade.setCourse(course);
         grade.setStudent(student);
         gradeDAO.create(grade);
         em.flush();
 
         conversation.end();
+        FacesContext context = FacesContext.getCurrentInstance();
+        return context.getViewRoot().getViewId() + "?faces-redirect=true";
     }
 
 }
