@@ -11,6 +11,15 @@
     <result column="GRADE" jdbcType="INTEGER" property="grade" />
     <result column="STUDENT_ID" jdbcType="INTEGER" property="studentId" />
     <result column="COURSE_ID" jdbcType="INTEGER" property="courseId" />
+
+
+
+   <!-- <association property="student" resultMap="lt.vu.usecases.mybatis.dao.StudentMapper.BaseResultMap"
+                 columnPrefix="student_"/>
+    <association property="course" resultMap="lt.vu.usecases.mybatis.dao.CourseMapper.BaseResultMap"
+                 columnPrefix="course_"/>
+   -->
+
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     <!--

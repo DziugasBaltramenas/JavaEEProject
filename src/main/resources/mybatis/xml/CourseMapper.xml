@@ -4,6 +4,9 @@
     <resultMap id="BaseResultMap" type="lt.vu.usecases.mybatis.model.Course">
         <id column="id" jdbcType="INTEGER" property="id"/>
         <result column="name" jdbcType="VARCHAR" property="name"/>
+
+
+        <collection property="grades" javaType="ArrayList" column="id" ofType="Grade" select="selectGradesForCourse"/>
     </resultMap>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
@@ -36,4 +39,15 @@
             name
         FROM public.course
     </select>
+
+    <select id="selectGradesForCourse" resultType="Grade">
+        SELECT
+        c.id,
+        c.grade
+        FROM public.grade c
+        JOIN public.COURSE sc on c.COURSE_ID = sc.ID
+        WHERE sc.ID = #{id,jdbcType=INTEGER}
+    </select>
+
+
 </mapper>

@@ -6,6 +6,7 @@
     <typeAliases>
         <typeAlias type="lt.vu.usecases.mybatis.model.Student" alias="Student"/>
         <typeAlias type="lt.vu.usecases.mybatis.model.Course" alias="Course"/>
+        <typeAlias type="lt.vu.usecases.mybatis.model.Grade" alias="Grade"/>
         <typeAlias type="lt.vu.usecases.mybatis.model.University" alias="University"/>
         <typeAlias type="lt.vu.usecases.mybatis.model.StudentCourse" alias="StudentCourse"/>
     </typeAliases>
@@ -23,5 +24,6 @@
         <mapper resource="mybatis/xml/StudentMapper.xml"/>
         <mapper resource="mybatis/xml/StudentCourseMapper.xml"/>
         <mapper resource="mybatis/xml/UniversityMapper.xml"/>
+        <mapper resource="mybatis/xml/GradeMapper.xml"/>
     </mappers>
 </configuration>

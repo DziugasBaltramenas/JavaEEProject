@@ -18,4 +18,5 @@ public class Student {
     // Rankomis prirašyti:
     private University university;
     private List<Course> courses;
+    private List<Grade> grades;
 }

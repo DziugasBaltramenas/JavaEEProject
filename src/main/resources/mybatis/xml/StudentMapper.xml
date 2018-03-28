@@ -16,6 +16,8 @@
         <!-- Rankomis prirašytas ryšiui ManyToMany Student - Course -->
         <!-- Nested select (yra N+1 select problema) -->
         <collection property="courses" javaType="ArrayList" column="id" ofType="Course" select="selectCoursesForStudent"/>
+
+        <collection property="grades" javaType="ArrayList" column="id" ofType="Grade" select="selectGradesForStudent"/>
     </resultMap>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
@@ -58,6 +60,15 @@
         FROM public.course c
             JOIN public.student_course sc on c.id = sc.course_id
         WHERE sc.student_id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectGradesForStudent" resultType="Grade">
+        SELECT
+        c.id,
+        c.grade
+        FROM public.grade c
+        JOIN public.STUDENT sc on c.STUDENT_ID = sc.ID
+        WHERE sc.ID = #{id,jdbcType=INTEGER}
     </select>
 
 </mapper>

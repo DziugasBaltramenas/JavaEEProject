@@ -1,5 +1,10 @@
 package lt.vu.usecases.mybatis.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
+import java.util.List;
+
 public class Course {
     /**
      *
@@ -66,4 +71,8 @@ public class Course {
     public void setName(String name) {
         this.name = name;
     }
+
+    @Getter
+    @Setter
+    private List<Grade> grades;
 }

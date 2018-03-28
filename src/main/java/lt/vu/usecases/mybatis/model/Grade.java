@@ -1,5 +1,10 @@
 package lt.vu.usecases.mybatis.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
+import java.util.List;
+
 public class Grade {
     /**
      *
@@ -132,4 +137,16 @@ public class Grade {
     public void setCourseId(Integer courseId) {
         this.courseId = courseId;
     }
+
+
+   /* @Getter
+    @Setter
+    private Student student;
+
+    @Getter
+    @Setter
+    private Course course;*/
+
+
+
 }

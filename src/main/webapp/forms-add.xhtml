@@ -22,7 +22,8 @@
                 </b:dataTableColumn>
                 <b:dataTableColumn label="Courses">
                     <ui:repeat var="course" value="#{student.courseList}">
-                        <h:outputText value="#{course.name} "/>
+                        <h:outputText value="#{course.name}"/>
+                        <br/>
                     </ui:repeat>
                 </b:dataTableColumn>
                 <b:dataTableColumn label="University">
