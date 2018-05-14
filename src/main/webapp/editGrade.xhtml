@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+
+>
+<h:head>
+    <h:outputStylesheet name="css/styles.css" />
+    <title>Request type usecase (DAO with MyBatis)</title>
+</h:head>
+<b:navBar id="dropMenuExample">
+    <ui:include src="/WEB-INF/templates/menu.xhtml" />
+</b:navBar>
+
+<h:body>
+
+    <b:panelGrid columns="1" colMd="8" offsetMd="2">
+    <h:form id="form1">
+        <b:dataTable  id="list2" value="#{editGrade.allGrades}" var="grade">
+            <b:dataTableColumn label="Student">
+                <h:outputText value="#{grade.student.firstName} #{grade.student.lastName} #{grade.student.registrationNo}"/>
+            </b:dataTableColumn>
+            <b:dataTableColumn label="Course">
+                <h:outputText value="#{grade.course.name} "/>
+            </b:dataTableColumn>
+            <b:dataTableColumn label="Grade">
+                <h:outputText value="#{grade.grade} "/>
+            </b:dataTableColumn>
+            <b:dataTableColumn >
+                <p:commandButton value="Edit" icon="ui-icon-pencil"
+                                 actionListener="#{editGrade.prepareForEditing(grade)}"
+                                 update=":form:studentDetail"
+                                 oncomplete="PF('studentDialog').show()" />
+            </b:dataTableColumn>
+        </b:dataTable>
+    </h:form>
+    </b:panelGrid>
+
+
+    <h:form id="form">
+        <p:dialog header="Edit Grade" widgetVar="studentDialog" modal="true" closable="true" resizable="false" closeOnEscape="true">
+            <p:outputPanel id="studentDetail">
+                <h:outputText value="No grade was selected... Weird..." rendered="#{empty editGrade.selectedGrade}" />
+                <h:panelGrid columns="2" rendered="#{not empty editGrade}"
+                              columnClasses="label,value" styleClass="ui-noborder">
+                    <h:outputText value="Grade" style="color: black"/>
+                    <h:inputText  value="#{editGrade.selectedGrade.grade}" label="Grade"
+                                 required="true"/>
+                    <h:outputText value="#{editGrade.selectedGrade.optLockVersion}" style="font-weight: bold"/>
+                </h:panelGrid>
+
+                <p:commandButton value="Update" actionListener="#{editGrade.updateSelectedGrade}"
+                                 rendered="#{empty editGrade.conflictingGrade}"
+                                 icon="ui-icon-check" style="margin-top: 1em"
+                                 update=":form:studentDetail :form1:list2"
+                                 oncomplete="if (args &amp;&amp; !args.validationFailed) PF('studentDialog').hide()" />
+
+                <p:panelGrid  columns="2" rendered="#{not empty editGrade.conflictingGrade}"
+                              columnClasses="label,value" styleClass="ui-noborder" style="margin-top: 1em">
+                    <f:facet name="header">Conflicting grade</f:facet>
+
+                    <h:outputText value="Grade" style="color: black"/>
+                    <h:inputText value="#{editGrade.selectedGrade.grade}" label="Grade"
+                                 required="true"/>
+                    <h:outputText value="#{editGrade.selectedGrade.optLockVersion}" style="font-weight: bold"/>
+                </p:panelGrid>
+
+                <p:commandButton value="Overwrite" actionListener="#{editGrade.overwriteGrade}"
+                                 rendered="#{not empty editGrade.conflictingGrade}"
+                                 icon="ui-icon-notice" style="margin-top: 1em"
+                                 update=":form:studentDetail :form1:list2"
+                                 oncomplete="if (args &amp;&amp; !args.validationFailed) PF('studentDialog').hide()" />
+            </p:outputPanel>
+        </p:dialog>
+
+        <p:messages globalOnly="true"/>
+    </h:form>
+
+
+</h:body>
+</html>
+

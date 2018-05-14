@@ -23,6 +23,10 @@ import java.util.Set;
 
 @Entity
 @Table(name = "GRADE")
+@NamedQueries({
+        @NamedQuery(name = "Grade.findAll", query = "SELECT s FROM Grade s"),
+        @NamedQuery(name = "Grade.findById", query = "SELECT s FROM Grade s WHERE s.id = :id")
+})
 @Getter
 @Setter
 @EqualsAndHashCode(of = "id")
@@ -40,6 +44,10 @@ public class Grade implements Serializable {
     @Column(name = "GRADE")
     private Integer grade;
 
+    @Size(min = 3, max = 20)
+    @Column(name = "TITLE")
+    private String title;
+
     @JoinColumn(name = "COURSE_ID", referencedColumnName = "ID")
     @ManyToOne
     @JohnzonIgnore
@@ -50,5 +58,8 @@ public class Grade implements Serializable {
     @JohnzonIgnore
     private Student student;
 
+    @Version
+    @Column(name = "OPT_LOCK_VERSION", nullable = false)
+    private int optLockVersion;
 
 }

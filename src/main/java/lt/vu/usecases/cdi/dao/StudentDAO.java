@@ -10,7 +10,7 @@ import java.util.List;
 @ApplicationScoped
 public class StudentDAO {
     @Inject
-    private EntityManager em;
+    protected EntityManager em;
 
     public void create(Student student) {
         em.persist(student);

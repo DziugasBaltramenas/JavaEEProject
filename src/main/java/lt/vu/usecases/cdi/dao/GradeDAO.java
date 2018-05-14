@@ -9,9 +9,9 @@ import javax.persistence.EntityManager;
 import java.util.List;
 
 @ApplicationScoped
-public class GradeDAO {
+public class GradeDAO implements IGradeDAO {
     @Inject
-    private EntityManager em;
+    protected EntityManager em;
 
     public void create(Grade grade) {
         em.persist(grade);
@@ -20,4 +20,13 @@ public class GradeDAO {
         em.merge(grade);
         em.flush();
     }
+
+    public List<Grade> getAllGrades() {
+        return em.createNamedQuery("Grade.findAll", Grade.class).getResultList();
+    }
+
+    public Grade findById(Integer id) {
+        return em.find(Grade.class, id);
+    }
+
 }

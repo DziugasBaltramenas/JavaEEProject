@@ -7,6 +7,12 @@
         bean-discovery-mode="annotated">
 
     <alternatives>
-        <class>org.apache.deltaspike.jpa.impl.transaction.ContainerManagedTransactionStrategy</class>
+        <class>lt.vu.usecases.cdi.dao.GradeDAOAdvanced</class>
     </alternatives>
+    <interceptors>
+        <class>lt.vu.interceptors.LoggingInterceptor</class>
+    </interceptors>
+    <decorators>
+        <class>lt.vu.decorators.GradeTitleDecorator</class>
+    </decorators>
 </beans>
