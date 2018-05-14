@@ -26,9 +26,6 @@
                         <br/>
                     </ui:repeat>
                 </b:dataTableColumn>
-                <b:dataTableColumn label="University">
-                    <h:outputText value="#{student.university.title} "/>
-                </b:dataTableColumn>
                 <b:dataTableColumn label="Grades">
                     <ui:repeat var="grade" value="#{student.gradeList}">
                         <h:outputText value="#{grade.grade} "/>
@@ -43,27 +40,28 @@
         <b:form var="lastName">
             <p:outputPanel rendered="#{conversationUseCaseControllerCdi.isCurrentForm('GET_COURSE')}">
                 <h1>Select course</h1>
-                <b:radiobutton value="#{courseBeans.course}">
-                    <f:selectItems value="#{courseBeans.courses}"/>
+                <b:radiobutton value="#{radioButtonsBeans.course}">
+                    <f:selectItems value="#{radioButtonsBeans.courses}"/>
                 </b:radiobutton>
                 <b:commandButton update="@form" value="Find"
-                                 actionListener="#{conversationUseCaseControllerCdi.findCourse(courseBeans.course)}"/>
+                                 actionListener="#{conversationUseCaseControllerCdi.findCourse(radioButtonsBeans.course)}"/>
 
             </p:outputPanel>
             <p:outputPanel rendered="#{conversationUseCaseControllerCdi.isCurrentForm('GET_STUDENT')}">
                 <h1>Select Student</h1>
-                <b:radiobutton value="#{studentBeans.id}">
-                    <f:selectItems value="#{studentBeans.students}"/>
-                </b:radiobutton>
+                <b:radiobutton value="#{radioButtonsBeans.student}">
+                    <f:selectItems value="#{radioButtonsBeans.courseStudents}"/>
+            </b:radiobutton>
                 <b:commandButton update="@form" value="Find"
-                                 actionListener="#{conversationUseCaseControllerCdi.findStudent(studentBeans.id)}"/>
+                                 actionListener="#{conversationUseCaseControllerCdi.findStudent(radioButtonsBeans.student)}"/>
 
             </p:outputPanel>
             <p:outputPanel rendered="#{conversationUseCaseControllerCdi.isCurrentForm('CREATE_GRADE')}">
-                <b:inputText id="grade" value="#{conversationUseCaseControllerCdi.grade.grade}" label="Grade"
+                <b:inputText id="grade" value="#{gradeBean.grade.grade}" label="Grade"
                              required="true"/>
+                <b:message for="@previous" />
                 <b:commandButton update="@form" value="Add grade"
-                                 action="#{conversationUseCaseControllerCdi.createGrade}"
+                                 action="#{conversationUseCaseControllerCdi.createGrade(gradeBean.grade)}"
                                  />
             </p:outputPanel>
         </b:form>

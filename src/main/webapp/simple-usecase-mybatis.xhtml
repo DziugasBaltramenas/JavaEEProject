@@ -12,7 +12,7 @@
         <h:outputStylesheet name="css/styles.css" />
         <title>Request type usecase (DAO with MyBatis)</title>
     </h:head>
-    <b:navBar brand="Brand" href="/" id="dropMenuExample">
+    <b:navBar id="dropMenuExample">
         <ui:include src="/WEB-INF/templates/menu.xhtml" />
     </b:navBar>
 
@@ -28,9 +28,6 @@
                             <h:outputText value="#{course.name} "/>
                             <br/>
                         </ui:repeat>
-                    </b:dataTableColumn>
-                    <b:dataTableColumn label="University">
-                        <h:outputText value="#{student.university.title} "/>
                     </b:dataTableColumn>
                     <b:dataTableColumn label="Grades">
                         <ui:repeat var="grade" value="#{student.grades}">
@@ -48,20 +45,20 @@
             <b:form var="lastName">
                 <p:outputPanel rendered="#{requestUseCaseControllerMyBatis.isCurrentForm('GET_COURSE')}">
                     <h1>Select course</h1>
-                    <b:radiobutton value="#{courseBeans.course}">
-                        <f:selectItems value="#{courseBeans.courses}"/>
+                    <b:radiobutton value="#{radioButtonsBeans.course}">
+                        <f:selectItems value="#{radioButtonsBeans.courses}"/>
                     </b:radiobutton>
                     <b:commandButton update="@form" value="Find"
-                                     actionListener="#{requestUseCaseControllerMyBatis.findCourse(courseBeans.course)}"/>
+                                     actionListener="#{requestUseCaseControllerMyBatis.findCourse(radioButtonsBeans.course)}"/>
 
                 </p:outputPanel>
                 <p:outputPanel rendered="#{requestUseCaseControllerMyBatis.isCurrentForm('GET_STUDENT')}">
                 <h1>Select Student</h1>
-                <b:radiobutton value="#{studentBeans.id}">
-                    <f:selectItems value="#{studentBeans.students}"/>
+                <b:radiobutton value="#{radioButtonsBeans.student}">
+                    <f:selectItems value="#{radioButtonsBeans.noCourseStudents}"/>
                 </b:radiobutton>
                 <b:commandButton update="@form" value="Find"
-                                 action="#{requestUseCaseControllerMyBatis.findStudent(studentBeans.id)}"/>
+                                 action="#{requestUseCaseControllerMyBatis.findStudent(radioButtonsBeans.student)}"/>
                 </p:outputPanel>
             </b:form>
         </b:panelGrid>

@@ -15,7 +15,6 @@ public class Student {
     private Integer universityId;
     private String registrationNo;
 
-    // Rankomis prirašyti:
     private University university;
     private List<Course> courses;
     private List<Grade> grades;

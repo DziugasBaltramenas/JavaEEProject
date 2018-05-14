@@ -19,7 +19,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Named
-@RequestScoped // @SessionScoped
+@RequestScoped
 public class StudentBeans {
 
     @Inject
@@ -37,6 +37,5 @@ public class StudentBeans {
             students.put(student.getFirstName() + " " + student.getLastName(), student.getId());
         }
     }
-
 
 }

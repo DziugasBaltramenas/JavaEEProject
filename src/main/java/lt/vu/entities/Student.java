@@ -24,7 +24,9 @@ import java.util.List;
     @NamedQuery(name = "Student.findById", query = "SELECT s FROM Student s WHERE s.id = :id"),
     @NamedQuery(name = "Student.findByFirstName", query = "SELECT s FROM Student s WHERE s.firstName LIKE :firstName"),
     @NamedQuery(name = "Student.findByLastName", query = "SELECT s FROM Student s WHERE s.lastName LIKE :lastName"),
-    @NamedQuery(name = "Student.findByRegistrationNo", query = "SELECT s FROM Student s WHERE s.registrationNo = :registrationNo")
+    @NamedQuery(name = "Student.findByRegistrationNo", query = "SELECT s FROM Student s WHERE s.registrationNo = :registrationNo"),
+    @NamedQuery(name = "Student.findByNotAttendingToCourse", query = "SELECT s FROM Student s where  not exists (Select c FROM s.courseList c where c.id = :courseId) ")
+
 })
 @Getter
 @Setter

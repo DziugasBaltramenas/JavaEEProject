@@ -59,8 +59,6 @@ public class ConversationUseCaseControllerCdi implements Serializable {
     private Course course = new Course();
     @Getter
     private Student student = new Student();
-    @Getter
-    private Grade grade = new Grade();
 
     @Getter
     private List<Student> allStudents;
@@ -75,55 +73,6 @@ public class ConversationUseCaseControllerCdi implements Serializable {
         loadAllStudents();
     }
 
-    /**
-     * The first conversation step.
-     */
-    public void createCourse() {
-        conversation.begin();
-        currentForm = CURRENT_FORM.CREATE_STUDENT;
-    }
-
-    /**
-     * The second conversation step.
-     */
-    public void createStudent() {
-        student.getCourseList().add(course);
-        course.getStudentList().add(student);
-        currentForm = CURRENT_FORM.CONFIRMATION;
-    }
-
-    /**
-     * The last conversation step.
-     */
-    @Transactional(Transactional.TxType.REQUIRED)
-    public String ok() {
-        try {
-            courseDAO.create(course);
-            studentDAO.create(student);
-            em.flush();
-            Messages.addGlobalInfo("Success!");
-        } catch (OptimisticLockException ole) {
-            // Other user was faster...
-            Messages.addGlobalWarn("Please try again");
-            log.warn("Optimistic Lock violated: ", ole);
-        } catch (PersistenceException pe) {
-            // Some problems with DB - most often this is programmer's fault.
-            Messages.addGlobalError("Finita la commedia...");
-            log.error("Error ending conversation: ", pe);
-        }
-        Faces.getFlash().setKeepMessages(true);
-        conversation.end();
-        return PAGE_INDEX_REDIRECT;
-    }
-
-    /**
-     * The last (alternative) conversation step.
-     */
-    public String cancel() {
-        conversation.end();
-        return PAGE_INDEX_REDIRECT;
-    }
-
     private void loadAllStudents() {
         allStudents = studentDAO.getAllStudents();
     }
@@ -134,7 +83,6 @@ public class ConversationUseCaseControllerCdi implements Serializable {
 
     }
 
-
     public void findCourse(int id){
         conversation.begin();
         course = courseDAO.findById(id);
@@ -142,7 +90,7 @@ public class ConversationUseCaseControllerCdi implements Serializable {
     }
 
     @Transactional(Transactional.TxType.REQUIRED)
-    public String createGrade(){
+    public String createGrade(Grade grade){
         grade.setCourse(course);
         grade.setStudent(student);
         gradeDAO.create(grade);

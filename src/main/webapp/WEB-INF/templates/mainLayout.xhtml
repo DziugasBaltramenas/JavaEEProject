@@ -18,7 +18,7 @@
         <h:panelGroup id="page" layout="block">
             <h:panelGroup id="container" layout="block">
                 <header>
-                    <b:navBar brand="Brand" brandHref="#" id="dropMenuExample">
+                    <b:navBar id="dropMenuExample">
                         <ui:include src="menu.xhtml"/>
                     </b:navBar>
                     <p:panel header="Header">
@@ -31,22 +31,7 @@
                         <h:link value="Logout" outcome="/logout.xhtml" rendered="#{user.authenticated}"/>
                     </p:panel>
                 </header>
-
-
-
-
-                                <h1>#{pageName}</h1>
-
                 <ui:insert name="form-to-add" />
-
-
-
-                <footer id="footer" style="margin-top: 1em">
-                    <p:panel header="Footer: Testavimui:"
-                             rendered="#{facesContext.application.projectStage == 'Development'}">
-                        <h:outputText value="Sesija: #{session.id}" />
-                    </p:panel>
-                </footer>
             </h:panelGroup>
         </h:panelGroup>
 
