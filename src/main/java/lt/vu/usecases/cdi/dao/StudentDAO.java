@@ -1,6 +1,7 @@
 package lt.vu.usecases.cdi.dao;
 
 import lt.vu.entities.Student;
+import lt.vu.usecases.cdi.RescueOrAsync;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -10,6 +11,7 @@ import java.util.List;
 @ApplicationScoped
 public class StudentDAO {
     @Inject
+    @RescueOrAsync
     protected EntityManager em;
 
     public void create(Student student) {

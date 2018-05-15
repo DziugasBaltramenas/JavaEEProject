@@ -18,7 +18,23 @@
 
 <h:body>
 
+
+
+
+
     <b:panelGrid columns="1" colMd="8" offsetMd="2">
+
+        <h:form id="registration">
+            <p>Please enter student lastname:
+                <b:inputText id="name1" value="#{studentShow.name}"/>
+                <b:commandButton value="OK" action="#{studentShow.find}" ajax="false" disabled="#{!studentShow.enableRegister}"/>
+            </p>
+            <p:outputPanel id ="status" rendered="#{studentShow.showStatus}">
+                <p>#{studentShow.status}</p>
+                <p:commandButton value="Refresh" ajax="false" action="#{studentShow.updateStatus}" update=":registration" rendered="#{!studentShow.enableRegister}" />
+            </p:outputPanel>
+        </h:form>
+
     <h:form id="form1">
         <b:dataTable  id="list2" value="#{editGrade.allGrades}" var="grade">
             <b:dataTableColumn label="Student">
